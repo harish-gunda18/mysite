@@ -1,0 +1,5 @@
+python manage.py runserver - to start dev server
+python manage.py makemigrations - to make model migrations
+python manage.py migrate - to run migrations
+
+dont forget to register models to admin page
