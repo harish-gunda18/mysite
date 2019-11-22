@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
 from . import views
+from blog.api.views import api_detail_post_view
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('about/', views.about, name='blog-about'),
+    path('<title>/', api_detail_post_view, name='api-post-detail')
 ]
