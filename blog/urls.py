@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
 from . import views
-from blog.api.views import api_detail_post_view
+from blog.api.views import api_detail_post_view, api_update_post_view, api_delete_post_view, api_add_post_view
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -11,5 +11,8 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('about/', views.about, name='blog-about'),
-    path('<title>/', api_detail_post_view, name='api-post-detail')
+    path('<title>/detail/', api_detail_post_view, name='api-post-detail'),
+    path('<title>/update/', api_update_post_view, name='api-post-update'),
+    path('<title>/delete/', api_delete_post_view, name='api-post-delete'),
+    path('create/', api_add_post_view, name='api-post-create'),
 ]
