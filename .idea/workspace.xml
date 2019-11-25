@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="24f6d06f-dc1d-45f9-91fd-992eccda5d96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/templates/blog/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog/templates/blog/about.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -224,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574663352337</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="added put,delete,post rest apis">
+      <created>1574664852608</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1574664852608</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -250,6 +256,7 @@
     <MESSAGE value="latest 18th nov code" />
     <MESSAGE value="Ready for deployment" />
     <MESSAGE value="added get rest api" />
-    <option name="LAST_COMMIT_MESSAGE" value="added get rest api" />
+    <MESSAGE value="added put,delete,post rest apis" />
+    <option name="LAST_COMMIT_MESSAGE" value="added put,delete,post rest apis" />
   </component>
 </project>
