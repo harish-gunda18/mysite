@@ -1,14 +1,11 @@
-from rest_framework import status
+# from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
-from django.contrib.auth.models import User
-from blog.models import Post
 from users.api.serializers import RegistrationSerializer
 
 
 @api_view(['POST'])
-def api_user_add_view(request, title):
+def api_user_add_view(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(request.data)
         data = {}
@@ -22,6 +19,7 @@ def api_user_add_view(request, title):
         return Response(data)
 
 
+"""
 @api_view(['PUT'])
 def api_update_post_view(request, title):
     try:
@@ -68,5 +66,4 @@ def api_create_post_view(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+"""
