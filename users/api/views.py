@@ -7,7 +7,7 @@ from users.api.serializers import RegistrationSerializer
 @api_view(['POST'])
 def api_user_add_view(request):
     if request.method == 'POST':
-        serializer = RegistrationSerializer(request.data)
+        serializer = RegistrationSerializer(data=request.data)
         data = {}
         if serializer.is_valid():
             user = serializer.save()

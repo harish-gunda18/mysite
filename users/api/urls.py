@@ -1,8 +1,8 @@
-from companies.api.views import api_detail_company_view
+from users.api.views import api_user_add_view
 from django.urls import path
 
-app_name = 'companies'
+app_name = 'users'
 
 urlpatterns = [
-    path('<ticker>/', api_detail_company_view, name='detail')
+    path('register/', api_user_add_view, name='register')
 ]
