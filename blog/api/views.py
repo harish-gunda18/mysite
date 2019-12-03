@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth.models import User
 from blog.models import Post
@@ -8,6 +9,7 @@ from blog.api.serializers import BlogPostSerializer
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def api_detail_post_view(request, title):
     try:
         title = title.replace(r'%20', ' ')
@@ -21,12 +23,16 @@ def api_detail_post_view(request, title):
 
 
 @api_view(['PUT'])
+@permission_classes((IsAuthenticated,))
 def api_update_post_view(request, title):
     try:
         title = title.replace(r'%20', ' ')
         blog_post = Post.objects.get(title=title)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if blog_post.author != request.user:
+        return Response({"response": "You don't have permission to edit that"})
 
     if request.method == 'PUT':
         serializer = BlogPostSerializer(blog_post, data=request.data)
@@ -45,6 +51,8 @@ def api_delete_post_view(request, title):
         blog_post = Post.objects.get(title=title)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    if blog_post.author != request.user:
+        return Response({"response": "You don't have permission to delete that"})
 
     if request.method == 'DELETE':
         operation = blog_post.delete()
@@ -57,8 +65,9 @@ def api_delete_post_view(request, title):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def api_create_post_view(request):
-    user = User.objects.get(pk=1)
+    user = request.user
     blog_post = Post(author=user)
     if request.method == 'POST':
         serializer = BlogPostSerializer(blog_post, data=request.data)
