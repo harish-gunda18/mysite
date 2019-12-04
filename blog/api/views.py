@@ -49,6 +49,7 @@ def api_update_post_view(request, title):
 
 
 @api_view(['DELETE'])
+@permission_classes((IsAuthenticated,))
 def api_delete_post_view(request, title):
     try:
         title = title.replace(r'%20', ' ')

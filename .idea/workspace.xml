@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="24f6d06f-dc1d-45f9-91fd-992eccda5d96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -293,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575366779500</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fixed user models by adding args and kwargs to save">
+      <created>1575379562319</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1575379562319</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -328,6 +336,7 @@
     <MESSAGE value="added token authentication for all the methods" />
     <MESSAGE value="added search option to api" />
     <MESSAGE value="added user details get and update methods to api" />
-    <option name="LAST_COMMIT_MESSAGE" value="added user details get and update methods to api" />
+    <MESSAGE value="fixed user models by adding args and kwargs to save" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed user models by adding args and kwargs to save" />
   </component>
 </project>
