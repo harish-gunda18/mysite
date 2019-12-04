@@ -2,21 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24f6d06f-dc1d-45f9-91fd-992eccda5d96" name="Default Changelist" comment="updated readme file">
-      <change afterPath="$PROJECT_DIR$/media/profile_pics/desert.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/profile_pics/mask_from_v_for_vendetta.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/profile_pics/nature.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/sgunda.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/sgunda.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/botcreator1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mysite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mysite.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/templates/blog/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog/templates/blog/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/templates/blog/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog/templates/blog/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/templates/blog/user_posts.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog/templates/blog/user_posts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/default.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/default.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/profile_pics/Prerequisites.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/profile_pics/Prerequisites_L6pQttt.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/profile_pics/Prerequisites_nTcF6L3.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,24 +38,13 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/users/api" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sgunda\Desktop\mysite\users\api" />
       <recent name="C:\Users\sgunda\Desktop\mysite\blog" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.tests">
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -111,8 +96,20 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\botcreator1\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -356,5 +353,23 @@
     <MESSAGE value="fixed user models by adding args and kwargs to save" />
     <MESSAGE value="remove default permission class from settings.py and added permission to delete method in api" />
     <option name="LAST_COMMIT_MESSAGE" value="remove default permission class from settings.py and added permission to delete method in api" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1575446496733">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1575446496733" />
+    <state x="148" y="11" key="SettingsEditor" timestamp="1575446741774">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="148" y="11" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575446741774" />
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1575446862693">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1575446862693" />
+    <state x="384" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1575446077487">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="384" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575446077487" />
   </component>
 </project>
