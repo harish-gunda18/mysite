@@ -6,7 +6,6 @@ from django.urls import reverse
 
 # Create your models here.
 class Post(models.Model):
-    objects = None
     title = models.CharField(max_length=100)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
@@ -17,3 +16,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+
+class Comment(models.Model):
+    comment_text = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    pid = models.IntegerField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)

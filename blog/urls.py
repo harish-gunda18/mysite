@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, UserMyPostListView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView,\
+    UserMyPostListView
 from . import views
-from blog.api.views import api_detail_post_view, api_update_post_view, api_delete_post_view, api_create_post_view, ApiPostListView
+from blog.api.views import api_detail_post_view, api_update_post_view, api_delete_post_view, api_create_post_view,\
+    ApiPostListView
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
