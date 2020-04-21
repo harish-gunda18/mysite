@@ -1,20 +1,267 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <article class="media content-section">
-      <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
-      <div class="media-body">
-        <div class="article-metadata">
-          <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-          <small class="text-muted">{{ object.date_posted }}</small>
-          {% if object.author == user %}
-            <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted }}</small>
+        {% if object.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
-            </div>
-          {% endif %}
-        </div>
-        <h2 class="article-title">{{ object.title }}</h2>
-        <p class="article-content">{{ object.content }}</p>
+          </div>
+        {% endif %}
       </div>
-    </article>
+      <h2 class="article-title">{{ object.title }}</h2>
+      <p class="article-content">{{ object.content }}</p>
+    </div>
+  </article>
+  {% if user.is_authenticated %}
+    <div class="content-section mb-3">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="">
+                <legend class="border-bottom mb-3">Comment</legend>
+                <textarea name="comment_text" rows="3" cols="95" required></textarea>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info mt-2" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+  {% endif %}
+  {% if object.comments.all %}
+    <h2 class="text-info">Comments</h2>
+  {% else %}
+    <h2 class="text-info">No comments to display, write something</h2>
+  {% endif %}
+
+  <! –– logic to display comments ––>
+
+  {% for comment in object.comments.all|dictsortreversed:"date_posted" %}
+    <div class="media border p-3 mb-3">
+      <img src="{{ comment.author.profile.image.url }}" class="mr-3 mt-3 rounded-circle" style="width:60px;height:60px;">
+      <div class="media-body">
+        <div class="row">
+          <div class="col-sm-10">
+            <a href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+            <small class="text-muted ml-3">{{ comment.date_posted }}</small>
+          </div>
+          <div class="col-sm-2">
+
+            <! –– logic to display comment button ––>
+
+            {% if user.is_authenticated %}
+              <div class="dropdown">
+                {% if cpk and comment.pk == cpk %}
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" autofocus>
+                    ...
+                  </button>
+                {% else %}
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown">
+                    ...
+                  </button>
+                {% endif %}
+                <div class="dropdown-menu">
+                  {% if comment.author == user %}
+                  <a class="dropdown-item" onclick="show_form('updateDIV_{{ comment.id }}','replyDIV_{{ comment.id }}')">Update</a>
+                  <form method="post" action="{% url 'comment-delete' pk=comment.pk %}">
+                    {% csrf_token %}
+                    <button class="dropdown-item">Delete</button>
+                  </form>
+                  {% endif %}
+                  <a class="dropdown-item" onclick="show_form('replyDIV_{{ comment.id }}','updateDIV_{{ comment.id }}')">Reply</a>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <p>{{ comment.comment_text }}</p>
+
+        <! –– logic to display comment like ––>
+
+        {% if user.is_authenticated %}
+          <div class="row mb-2">
+            <div class="col-sm-1">
+              {% if comment.pk in user.profile.get_liked_comments %}
+                <button class="btn-sm btn-primary border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
+              {% else %}
+                <button class="btn-sm btn-link border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
+              {% endif %}
+
+            </div>
+            <div class="col-sm-7">
+              {% if comment.likes != 0 %}
+                <p id="like_{{ comment.id }}">{{ comment.likes }}</p>
+              {% else %}
+                <p id="like_{{ comment.id }}"></p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        <! –– comment forms ––>
+
+        <div id="updateDIV_{{ comment.id }}" style="display:none;">
+          <form method="POST" action="{% url 'comment-update' pk=comment.pk %}">
+            {% csrf_token %}
+            <fieldset class="">
+              <textarea name="comment_text" rows="5" cols="50" required>{{ comment.comment_text }}</textarea>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+        <div id="replyDIV_{{ comment.id }}" style="display:none;">
+          <form method="POST" action="{% url 'child-comment-create' ppk=comment.post.pk cpk=comment.pk %}">
+            {% csrf_token %}
+            <fieldset class="">
+              <textarea name="comment_text" rows="5" cols="50" required></textarea>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Reply</button>
+            </div>
+          </form>
+        </div>
+
+        <! –– logic to display child comments ––>
+
+        {% for child_comment in comment.child_comments.all|dictsort:"date_posted" %}
+          <div class="media p-3" style="padding-bottom: 1px;border-top: 1px solid #e3e3e3">
+            <img src="{{ child_comment.author.profile.image.url }}" class="mr-3 mt-3 rounded-circle" style="width:45px;height:45px;">
+            <div class="media-body">
+              <div class="row">
+                <div class="col-sm-8">
+                  <a href="{% url 'user-posts' child_comment.author.username %}"><small>{{ child_comment.author }}</small></a>
+                  <small class="text-muted ml-3">{{ child_comment.date_posted }}</small>
+                </div>
+                <div class="col-sm-4">
+
+                  <! –– logic to display child comment button ––>
+
+                  {% if user.is_authenticated %}
+                    <div class="dropdown">
+                      {% if ccpk and child_comment.pk == ccpk %}
+                        <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" autofocus>
+                          ...
+                        </button>
+                      {% else %}
+                        <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown">
+                          ...
+                        </button>
+                      {% endif %}
+                      <div class="dropdown-menu">
+                        {% if child_comment.author == user %}
+                          <a class="dropdown-item" onclick="show_form('updateDIV_{{ child_comment.id }}','replyDIV_{{ child_comment.id }}')">Update</a>
+                          <form method="post" action="{% url 'child-comment-delete' pk=child_comment.pk %}">
+                            {% csrf_token %}
+                            <button class="dropdown-item">Delete</button>
+                          </form>
+                        {% endif %}
+                        <a class="dropdown-item" onclick="show_form('replyDIV_{{ child_comment.id }}','updateDIV_{{ child_comment.id }}')">Reply</a>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <small>{{ child_comment.comment_text }}</small>
+
+              <! –– logic to display child comment like ––>
+
+              {% if user.is_authenticated %}
+                <div class="row mt-2">
+                  <div class="col-sm-1">
+                    {% if child_comment.pk in user.profile.get_liked_child_comments %}
+                      <button class="btn-sm btn-primary border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
+                    {% else %}
+                      <button class="btn-sm btn-link border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-7">
+                    {% if child_comment.likes != 0 %}
+                      <p id="like_child_{{ child_comment.id }}">{{ child_comment.likes }}</p>
+                    {% else %}
+                      <p id="like_child_{{ child_comment.id }}"></p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+
+              <! –– child comment forms ––>
+
+              <div id="updateDIV_{{ child_comment.id }}" style="display:none;">
+                <form method="POST" action="{% url 'child-comment-update' pk=child_comment.pk%}">
+                  {% csrf_token %}
+                  <fieldset class="">
+                    <textarea name="comment_text" rows="5" cols="50" required>{{ child_comment.comment_text }}</textarea>
+                  </fieldset>
+                  <div class="form-group">
+                      <button class="btn btn-outline-info" type="submit">Update</button>
+                  </div>
+                </form>
+              </div>
+              <div id="replyDIV_{{ child_comment.id }}" style="display:none;">
+                <form method="POST" action="{% url 'child-comment-create' ppk=comment.post.pk cpk=comment.pk %}">
+                  {% csrf_token %}
+                  <fieldset class="">
+                    <textarea name="comment_text" rows="5" cols="50" required></textarea>
+                  </fieldset>
+                  <div class="form-group">
+                      <button class="btn btn-outline-info" type="submit">Reply</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+  <script>
+    function show_form(id1,id2) {
+      var x = document.getElementById(id1);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      }
+      var y = document.getElementById(id2);
+      if (y.style.display === "block") {
+        y.style.display = "none";
+      }
+    }
+    function update_like(id, like, pk, url) {
+    var json_http = new XMLHttpRequest();
+    json_http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        try {
+          var myObj = JSON.parse(this.responseText);
+        }
+        catch(err) {
+          alert(err.message);
+        }
+        if (myObj.likes == 0) {
+          document.getElementById(id).innerHTML = '';
+        } else {
+          document.getElementById(id).innerHTML = myObj.likes;
+        }
+        var button_id;
+        if (url.toString().includes("child")) {
+          button_id = 'child_comment_button_' + pk;
+        } else {
+          button_id = 'comment_button_' + pk;
+        }
+        if (myObj.mute == 1) {
+          document.getElementById(button_id).className = 'btn-sm btn-link border';
+        } else {
+          document.getElementById(button_id).className = 'btn-sm btn-primary';
+        }
+      }
+    };
+    json_http.open("GET", url + '?like=' + like.toString() + '&pk=' + pk.toString() , true);
+    json_http.send();
+    }
+  </script>
 {% endblock content %}
+

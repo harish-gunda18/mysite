@@ -14,16 +14,13 @@ from blog.api.serializers import BlogPostSerializer
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
-def api_detail_post_view(request, title):
+def api_detail_post_view(request, pk):
     try:
-        title = title.replace(r'%20', ' ')
-        blog_post = Post.objects.get(title=title)
+        blog_post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = BlogPostSerializer(blog_post)
-        return Response(serializer.data)
+    serializer = BlogPostSerializer(blog_post)
+    return Response(serializer.data)
 
 
 @api_view(['PUT'])

@@ -21,6 +21,21 @@ class Post(models.Model):
 class Comment(models.Model):
     comment_text = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    pid = models.IntegerField()
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.comment_text
+
+
+class ChildComment(models.Model):
+    comment_text = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    parent_comment = models.ForeignKey(Comment, related_name='child_comments', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='child_comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='child_comments', on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.comment_text

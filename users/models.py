@@ -5,15 +5,32 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+import json
 
 
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    liked_comments = models.TextField(default='[]')
+    liked_child_comments = models.TextField(default='[]')
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
+    def set_liked_comments(self, s):
+        self.liked_comments = json.dumps(s)
+
+    def get_liked_comments(self):
+        return json.loads(self.liked_comments)
+
+    def set_liked_child_comments(self, s):
+        self.liked_child_comments = json.dumps(s)
+
+    def get_liked_child_comments(self):
+        return json.loads(self.liked_child_comments)
+
+
 """
     def save(self, *args, **kwargs):
         super().save(self, *args, **kwargs)
