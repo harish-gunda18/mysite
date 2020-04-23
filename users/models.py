@@ -16,7 +16,7 @@ class Profile(models.Model):
     liked_child_comments = models.TextField(default='[]')
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return str(self.user.username) + 'Profile'
 
     def set_liked_comments(self, s):
         self.liked_comments = json.dumps(s)
