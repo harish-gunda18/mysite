@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView,\
-    PostSearchListView
+    PostSearchListView, LatestPosts
 from . import views
 from blog.api.views import api_detail_post_view, api_update_post_view, api_delete_post_view, api_create_post_view,\
     ApiPostListView
@@ -22,6 +22,7 @@ urlpatterns = [
     path('about/', views.about, name='blog-about'),
     path('commentlikeupdate/', views.update_comment_likes, name='comment-like-update'),
     path('childcommentlikeupdate/', views.update_child_comment_likes, name='child-comment-like-update'),
+    path('latestposts/', LatestPosts.as_view(), name='latest-posts'),
     # api views
     path('<int:pk>/details/', api_detail_post_view, name='api-post-detail'),
     path('<title>/update/', api_update_post_view, name='api-post-update'),
