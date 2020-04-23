@@ -234,3 +234,14 @@ class PostSearchListView(ListView):
         return Post.objects.filter(
             Q(title__icontains=self.request.GET.get('search')) |
             Q(content__icontains=self.request.GET.get('search'))).order_by('-date_posted')
+
+
+class LatestPosts(ListView):
+    model = Post
+    template_name = 'blog/latest.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Post.objects.order_by('-date_posted')[:10]
