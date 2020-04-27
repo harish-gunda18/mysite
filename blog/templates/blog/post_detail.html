@@ -19,12 +19,12 @@
     </div>
   </article>
   {% if user.is_authenticated %}
-    <div class="content-section mb-3">
+    <div id = "comment-section" class="content-section mb-3">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="">
                 <legend class="border-bottom mb-3">Comment</legend>
-                <textarea name="comment_text" rows="3" cols="95" required></textarea>
+                <textarea id="comment-text" name="comment_text" rows="3" cols="95" required></textarea>
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info mt-2" type="submit">Post</button>
@@ -221,6 +221,8 @@
     </div>
   {% endfor %}
   <script>
+    var width = document.getElementById('article-section').offsetWidth;
+    document.getElementById("comment-text").cols = width/8;
     function show_form(id1,id2) {
       var x = document.getElementById(id1);
       if (x.style.display === "none") {
