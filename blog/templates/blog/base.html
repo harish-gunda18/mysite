@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <script src="{% static 'js/update_notification.js' %}"></script>
 
     {% if title %}
     <meta charset="UTF-8">
@@ -43,6 +44,19 @@
                             <a class="nav-item nav-link" href="{% url 'user-posts' username=user.username %}">My Posts</a>
                             <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
                             <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                  Notifications
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    {% for notification in user.notification_set.all %}
+                                        <div class="dropdown-item" id="notification_{{ notification.id }}">
+                                            <a style="display: inline-block;" href="{% url 'post-detail' pk=notification.post.id %}?cpk={{notification.comment.pk}}">{{ notification.notification_text }} | </a>
+                                            <button style="display: inline-block;" onclick="delete_notification('notification_{{ notification.id }}', '{% url 'notification-delete' pk=notification.id %}')">Mark as read</button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">LogOut</a>
                         {% else %}
                             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
