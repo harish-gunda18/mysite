@@ -16,6 +16,7 @@ urlpatterns = [
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('comment/<int:pk>/update/', views.comment_update, name='comment-update'),
     path('comment/<int:pk>/delete/', views.comment_delete, name='comment-delete'),
+    path('notification/<int:pk>/delete/', views.delete_notification, name='notification-delete'),
     path('childcomment/<int:pk>/update/', views.child_comment_update, name='child-comment-update'),
     path('childcomment/<int:pk>/delete/', views.child_comment_delete, name='child-comment-delete'),
     path('childcomment/<int:ppk>/<int:cpk>/create/', views.child_comment_create, name='child-comment-create'),
