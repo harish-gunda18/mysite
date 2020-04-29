@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .models import Post, Comment, ChildComment
+from .models import Post, Comment, ChildComment, Notification
 from .forms import CommentCreateForm, ChildCommentCreateForm
 from django.db.models import Q
 
@@ -245,3 +245,12 @@ class LatestPosts(ListView):
 
     def get_queryset(self):
         return Post.objects.order_by('-date_posted')[:10]
+
+
+def delete_notification(request, pk):
+    if request.user.is_authenticated:
+        notification = get_object_or_404(Notification, pk=pk)
+        if notification.author == request.user:
+            notification.delete()
+            return JsonResponse(data={'success': 'success'})
+    return JsonResponse(data={'error': 'Permission denied'})
