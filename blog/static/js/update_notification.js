@@ -7,6 +7,7 @@ function delete_notification(html_id, url) {
                 if(myObj.success == 'success') {
                     var element = document.getElementById(html_id);
                     element.parentNode.removeChild(element);
+                    document.getElementById('notification').click();
                 };
             }
             catch(err) {
