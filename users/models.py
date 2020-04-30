@@ -14,6 +14,7 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     liked_comments = models.TextField(default='[]')
     liked_child_comments = models.TextField(default='[]')
+    liked_posts = models.TextField(default='[]')
 
     def __str__(self):
         return str(self.user.username) + 'Profile'
@@ -29,6 +30,12 @@ class Profile(models.Model):
 
     def get_liked_child_comments(self):
         return json.loads(self.liked_child_comments)
+
+    def set_liked_posts(self, s):
+        self.liked_posts = json.dumps(s)
+
+    def get_liked_posts(self):
+        return json.loads(self.liked_posts)
 
 
 """
