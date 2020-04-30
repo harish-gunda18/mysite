@@ -21,6 +21,7 @@ urlpatterns = [
     path('childcomment/<int:pk>/delete/', views.child_comment_delete, name='child-comment-delete'),
     path('childcomment/<int:ppk>/<int:cpk>/create/', views.child_comment_create, name='child-comment-create'),
     path('about/', views.about, name='blog-about'),
+    path('postlikeupdate/', views.update_post_likes, name='post-like-update'),
     path('commentlikeupdate/', views.update_comment_likes, name='comment-like-update'),
     path('childcommentlikeupdate/', views.update_child_comment_likes, name='child-comment-like-update'),
     path('latestposts/', LatestPosts.as_view(), name='latest-posts'),
