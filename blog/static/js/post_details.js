@@ -1,12 +1,3 @@
-function fit_comment_text_area() {
-    var isFirefox = typeof InstallTrigger !== 'undefined';
-    var isIE = /*@cc_on!@*/false || !!document.documentMode;
-    if (isFirefox || isIE) {
-      document.getElementById("comment-text").cols = 73;
-    }
-}
-
-
 function show_form(id1,id2) {
   var x = document.getElementById(id1);
   if (x.style.display === "none") {
