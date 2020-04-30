@@ -1,4 +1,4 @@
-# Limitless Blog
+# Limitless Blog - A mini social media platform
 
 http://35.238.131.19/
 
