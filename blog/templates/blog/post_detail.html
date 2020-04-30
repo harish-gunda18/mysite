@@ -17,15 +17,15 @@
       <h2 class="article-title">{{ object.title }}</h2>
       <p class="article-content">{{ object.content }}</p>
       {% if user.is_authenticated %}
-        <div class="row mb-2">
-          <div class="col-sm-1">
+        <div class="mb-2">
+          <div style="display: inline-block;">
             {% if object.pk in user.profile.get_liked_posts %}
               <button class="btn-sm btn-primary border" id="post_button_{{ object.pk }}" onclick="update_like('post_like_{{ object.id }}', 1, {{ object.pk }}, {% url 'post-like-update' %})">like</button>
             {% else %}
               <button class="btn-sm btn-link border" id="post_button_{{ object.pk }}" onclick="update_like('post_like_{{ object.id }}', 1, {{ object.pk }}, {% url 'post-like-update' %})">like</button>
             {% endif %}
           </div>
-          <div class="col-sm-7">
+          <div style="display: inline-block;">
             {% if object.likes != 0 %}
               <p id="post_like_{{ object.id }}">{{ object.likes }}</p>
             {% else %}
