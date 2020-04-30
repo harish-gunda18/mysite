@@ -46,15 +46,15 @@
                             <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                             <li class="nav-item dropdown">
                                 <a id="notification" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                  Notifications
+                                  Notifications<sup id="notification_count">{{ user.notification_set.all|length }}</sup>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     {% for notification in user.notification_set.all|dictsortreversed:"date_posted" %}
                                         <div class="dropdown-item" id="notification_{{ notification.id }}">
                                             {% if notification.comment %}
-                                                <a style="display: inline-block;" href="{% url 'post-detail' pk=notification.post.id %}?cpk={{notification.comment.pk}}">{{ notification.notification_text }} | </a>
+                                                <a style="display: inline-block;" href="{% url 'post-detail' pk=notification.post.id %}?cpk={{notification.comment.pk}}">{{ notification.notification_text }} </a>
                                             {% else %}
-                                                <a style="display: inline-block;" href="{% url 'post-detail' pk=notification.post.id %}?ccpk={{notification.child_comment.pk}}">{{ notification.notification_text }} | </a>
+                                                <a style="display: inline-block;" href="{% url 'post-detail' pk=notification.post.id %}?ccpk={{notification.child_comment.pk}}">{{ notification.notification_text }} </a>
                                             {% endif %}
                                             <button style="display: inline-block;" onclick="delete_notification('notification_{{ notification.id }}', '{% url 'notification-delete' pk=notification.id %}')">Mark as read</button>
                                         </div>
