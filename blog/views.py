@@ -256,7 +256,8 @@ class PostSearchListView(ListView):
     def get_queryset(self):
         return Post.objects.filter(
             Q(title__icontains=self.request.GET.get('search')) |
-            Q(content__icontains=self.request.GET.get('search'))).order_by('-date_posted')
+            Q(content__icontains=self.request.GET.get('search')) |
+            Q(author__username__icontains=self.request.GET.get('search'))).order_by('-date_posted')
 
 
 class LatestPosts(ListView):
