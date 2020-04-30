@@ -102,15 +102,15 @@
         <! –– logic to display comment like ––>
 
         {% if user.is_authenticated %}
-          <div class="row mb-2">
-            <div class="col-sm-1">
+          <div>
+            <div style="display: inline-block;">
               {% if comment.pk in user.profile.get_liked_comments %}
                 <button class="btn-sm btn-primary border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
               {% else %}
                 <button class="btn-sm btn-link border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
               {% endif %}
             </div>
-            <div class="col-sm-7">
+            <div style="display: inline-block;">
               {% if comment.likes != 0 %}
                 <p id="like_{{ comment.id }}">{{ comment.likes }}</p>
               {% else %}
@@ -190,15 +190,15 @@
               <! –– logic to display child comment like ––>
 
               {% if user.is_authenticated %}
-                <div class="row mt-2">
-                  <div class="col-sm-1">
+                <div class="mt-2">
+                  <div style="display: inline-block;">
                     {% if child_comment.pk in user.profile.get_liked_child_comments %}
                       <button class="btn-sm btn-primary border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
                     {% else %}
                       <button class="btn-sm btn-link border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
                     {% endif %}
                   </div>
-                  <div class="col-sm-7">
+                  <div style="display: inline-block;">
                     {% if child_comment.likes != 0 %}
                       <p id="like_child_{{ child_comment.id }}">{{ child_comment.likes }}</p>
                     {% else %}
