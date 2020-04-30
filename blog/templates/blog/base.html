@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
     <script src="{% static 'js/update_notification.js' %}"></script>
+    <script src="{% static 'js/post_details.js' %}"></script>
 
     {% if title %}
     <meta charset="UTF-8">
@@ -19,8 +20,11 @@
         <title>Limitless Blog</title>
     {% endif %}
 </head>
-<body>
-
+{% if object %}
+    <body onload="fit_comment_text_area()">
+{% else %}
+    <body>
+{% endif %}
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
@@ -71,7 +75,6 @@
             </div>
         </nav>
     </header>
-
     <main role="main" class="container">
       <div class="row">
         <div id="article-section" class="col-md-8">
