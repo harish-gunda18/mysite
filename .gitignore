@@ -1,3 +1,11 @@
 /venv/
 mysite/settings.py
 db.sqlite3
+/.idea/.gitignore
+/.idea/dictionaries/botcreator1.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/mysite.iml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/dictionaries/sgunda.xml
+/.idea/vcs.xml
