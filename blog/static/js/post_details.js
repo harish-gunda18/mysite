@@ -37,6 +37,8 @@ function update_like(id, like, pk, url) {
             var button_id;
             if (url.toString().includes("child")) {
                 button_id = 'child_comment_button_' + pk;
+            } else if (url.toString().includes("post")) {
+                button_id = 'post_button_' + pk;
             } else {
                 button_id = 'comment_button_' + pk;
             }
