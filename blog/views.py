@@ -200,6 +200,29 @@ def update_comment_likes(request):
         return JsonResponse(data={'permission': 'denied'})
 
 
+def update_post_likes(request):
+    if request.user.is_authenticated:
+        like = int(request.GET.get('like'))
+        pk = int(request.GET.get('pk'))
+        profile = request.user.profile
+        liked_list = profile.get_liked_posts()
+        post = get_object_or_404(Post, pk=pk)
+        if pk not in liked_list:
+            post.likes = post.likes + like
+            liked_list.append(pk)
+            mute = 0
+        else:
+            post.likes = post.likes - like
+            liked_list.remove(pk)
+            mute = 1
+        profile.set_liked_posts(liked_list)
+        profile.save()
+        post.save()
+        return JsonResponse(data={'likes': post.likes, 'mute': mute})
+    else:
+        return JsonResponse(data={'permission': 'denied'})
+
+
 def update_child_comment_likes(request):
     if request.user.is_authenticated:
         like = int(request.GET.get('like'))
