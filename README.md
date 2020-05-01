@@ -2,7 +2,7 @@
 
 http://35.238.131.19/
 
-This website was created by Harish. Credits to Corey Schafer.
+This website was created by Harish using Django Framework. Credits to Corey Schafer.
 In this website you can create profile. You can write, update and delete your blog posts.
 You can have a profile picture for your profile and can reset your password in profile section.
 To create a profile click on register on home page. If you have already created a profile you can directly login by 
