@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .models import Post, Comment, ChildComment, Notification
+from .models import Post, Comment, ChildComment, Notification, CommentLikes, PostLikes, ChildCommentLikes
 from .forms import CommentCreateForm, ChildCommentCreateForm
 from django.db.models import Q
 
@@ -43,6 +43,16 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        post_pk = self.kwargs.get('pk')
+        post = get_object_or_404(Post, pk=post_pk)
+        if post.postlikes_set.all().exists():
+            context['post_liked'] = 'yes'
+        filtered_comment_keys = post.comments.all().values_list('pk', flat=True)
+        context['comments_liked'] = self.request.user.commentlikes_set.\
+            filter(comment__pk__in=filtered_comment_keys).values_list('comment__pk', flat=True)
+        filtered_c_comment_keys = post.child_comments.all().values_list('pk', flat=True)
+        context['child_comments_liked'] = self.request.user.childcommentlikes_set.\
+            filter(child_comment__pk__in=filtered_c_comment_keys).values_list('child_comment__pk', flat=True)
         if self.request.GET.get('cpk'):
             context['cpk'] = int(self.request.GET.get('cpk'))
         if self.request.GET.get('ccpk'):
@@ -179,69 +189,45 @@ def child_comment_create(request, ppk, cpk):
 
 def update_comment_likes(request):
     if request.user.is_authenticated:
-        like = int(request.GET.get('like'))
         pk = int(request.GET.get('pk'))
-        profile = request.user.profile
-        liked_list = profile.get_liked_comments()
         comment = get_object_or_404(Comment, pk=pk)
-        if pk not in liked_list:
-            comment.likes = comment.likes + like
-            liked_list.append(pk)
-            mute = 0
-        else:
-            comment.likes = comment.likes - like
-            liked_list.remove(pk)
+        if request.user.commentlikes_set.filter(comment__pk=pk).exists():
+            request.user.commentlikes_set.filter(comment__pk=pk).delete()
             mute = 1
-        profile.set_liked_comments(liked_list)
-        profile.save()
-        comment.save()
-        return JsonResponse(data={'likes': comment.likes, 'mute': mute})
+        else:
+            CommentLikes.objects.create(comment=comment, author=request.user)
+            mute = 0
+        return JsonResponse(data={'likes': len(comment.commentlikes_set.all()), 'mute': mute})
     else:
         return JsonResponse(data={'permission': 'denied'})
 
 
 def update_post_likes(request):
     if request.user.is_authenticated:
-        like = int(request.GET.get('like'))
         pk = int(request.GET.get('pk'))
-        profile = request.user.profile
-        liked_list = profile.get_liked_posts()
         post = get_object_or_404(Post, pk=pk)
-        if pk not in liked_list:
-            post.likes = post.likes + like
-            liked_list.append(pk)
-            mute = 0
-        else:
-            post.likes = post.likes - like
-            liked_list.remove(pk)
+        if request.user.postlikes_set.filter(post__pk=pk).exists():
+            request.user.postlikes_set.filter(post__pk=pk).delete()
             mute = 1
-        profile.set_liked_posts(liked_list)
-        profile.save()
-        post.save()
-        return JsonResponse(data={'likes': post.likes, 'mute': mute})
+        else:
+            PostLikes.objects.create(post=post, author=request.user)
+            mute = 0
+        return JsonResponse(data={'likes': len(post.postlikes_set.all()), 'mute': mute})
     else:
         return JsonResponse(data={'permission': 'denied'})
 
 
 def update_child_comment_likes(request):
     if request.user.is_authenticated:
-        like = int(request.GET.get('like'))
         pk = int(request.GET.get('pk'))
-        profile = request.user.profile
-        liked_list = profile.get_liked_child_comments()
-        comment = get_object_or_404(ChildComment, pk=pk)
-        if pk not in liked_list:
-            comment.likes = comment.likes + like
-            liked_list.append(pk)
-            mute = 0
-        else:
-            comment.likes = comment.likes - like
-            liked_list.remove(pk)
+        child_comment = get_object_or_404(ChildComment, pk=pk)
+        if request.user.childcommentlikes_set.filter(child_comment__pk=pk).exists():
+            request.user.childcommentlikes_set.filter(child_comment__pk=pk).delete()
             mute = 1
-        profile.set_liked_child_comments(liked_list)
-        profile.save()
-        comment.save()
-        return JsonResponse(data={'likes': comment.likes, 'mute': mute})
+        else:
+            ChildCommentLikes.objects.create(child_comment=child_comment, author=request.user)
+            mute = 0
+        return JsonResponse(data={'likes': len(child_comment.childcommentlikes_set.all()), 'mute': mute})
     else:
         return JsonResponse(data={'permission': 'denied'})
 
