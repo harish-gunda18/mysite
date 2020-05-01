@@ -42,10 +42,28 @@ class ChildComment(models.Model):
         return self.comment_text
 
 
+class PostLikes(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class CommentLikes(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ChildCommentLikes(models.Model):
+    child_comment = models.ForeignKey(ChildComment, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Notification(models.Model):
     notification_text = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     child_comment = models.ForeignKey(ChildComment, on_delete=models.CASCADE, null=True)
+    liked_post = models.ForeignKey(PostLikes, on_delete=models.CASCADE, null=True)
+    liked_comment = models.ForeignKey(CommentLikes, on_delete=models.CASCADE, null=True)
+    liked_child_comment = models.ForeignKey(ChildCommentLikes, on_delete=models.CASCADE, null=True)
