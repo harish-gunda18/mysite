@@ -19,15 +19,15 @@
       {% if user.is_authenticated %}
         <div class="mb-2">
           <div style="display: inline-block;">
-            {% if object.pk in user.profile.get_liked_posts %}
+            {% if post_liked %}
               <button class="btn-sm btn-primary border" id="post_button_{{ object.pk }}" onclick="update_like('post_like_{{ object.id }}', 1, {{ object.pk }}, {% url 'post-like-update' %})">like</button>
             {% else %}
               <button class="btn-sm btn-link border" id="post_button_{{ object.pk }}" onclick="update_like('post_like_{{ object.id }}', 1, {{ object.pk }}, {% url 'post-like-update' %})">like</button>
             {% endif %}
           </div>
           <div style="display: inline-block;">
-            {% if object.likes != 0 %}
-              <p id="post_like_{{ object.id }}">{{ object.likes }}</p>
+            {% if object.postlikes_set.all.exists %}
+              <p id="post_like_{{ object.id }}">{{ object.postlikes_set.all|length }}</p>
             {% else %}
               <p id="post_like_{{ object.id }}"></p>
             {% endif %}
@@ -102,17 +102,17 @@
         <! –– logic to display comment like ––>
 
         {% if user.is_authenticated %}
-          <div>
+          <div class="mb-2">
             <div style="display: inline-block;">
-              {% if comment.pk in user.profile.get_liked_comments %}
+              {% if comment.pk in comments_liked %}
                 <button class="btn-sm btn-primary border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
               {% else %}
                 <button class="btn-sm btn-link border" id="comment_button_{{ comment.pk }}" onclick="update_like('like_{{ comment.id }}', 1, {{ comment.pk }}, {% url 'comment-like-update' %})">like</button>
               {% endif %}
             </div>
             <div style="display: inline-block;">
-              {% if comment.likes != 0 %}
-                <p id="like_{{ comment.id }}">{{ comment.likes }}</p>
+              {% if comment.commentlikes_set.all.exists %}
+                <p id="like_{{ comment.id }}">{{ comment.commentlikes_set.all|length }}</p>
               {% else %}
                 <p id="like_{{ comment.id }}"></p>
               {% endif %}
@@ -192,15 +192,15 @@
               {% if user.is_authenticated %}
                 <div class="mt-2">
                   <div style="display: inline-block;">
-                    {% if child_comment.pk in user.profile.get_liked_child_comments %}
+                    {% if child_comment.pk in child_comments_liked %}
                       <button class="btn-sm btn-primary border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
                     {% else %}
                       <button class="btn-sm btn-link border" id="child_comment_button_{{ child_comment.pk }}" onclick="update_like('like_child_{{ child_comment.id }}', 1, {{ child_comment.pk }}, {% url 'child-comment-like-update' %})">like</button>
                     {% endif %}
                   </div>
                   <div style="display: inline-block;">
-                    {% if child_comment.likes != 0 %}
-                      <p id="like_child_{{ child_comment.id }}">{{ child_comment.likes }}</p>
+                    {% if child_comment.childcommentlikes_set.all.exists %}
+                      <p id="like_child_{{ child_comment.id }}">{{ child_comment.childcommentlikes_set.all|length }}</p>
                     {% else %}
                       <p id="like_child_{{ child_comment.id }}"></p>
                     {% endif %}
