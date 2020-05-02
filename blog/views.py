@@ -45,14 +45,15 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         post_pk = self.kwargs.get('pk')
         post = get_object_or_404(Post, pk=post_pk)
-        if post.postlikes_set.all().exists():
-            context['post_liked'] = 'yes'
-        filtered_comment_keys = post.comments.all().values_list('pk', flat=True)
-        context['comments_liked'] = self.request.user.commentlikes_set.\
-            filter(comment__pk__in=filtered_comment_keys).values_list('comment__pk', flat=True)
-        filtered_c_comment_keys = post.child_comments.all().values_list('pk', flat=True)
-        context['child_comments_liked'] = self.request.user.childcommentlikes_set.\
-            filter(child_comment__pk__in=filtered_c_comment_keys).values_list('child_comment__pk', flat=True)
+        if self.request.user.is_authenticated:
+            if self.request.user.postlikes_set.filter(post=post).exists():
+                context['post_liked'] = 'yes'
+            filtered_comment_keys = post.comments.all().values_list('pk', flat=True)
+            context['comments_liked'] = self.request.user.commentlikes_set.\
+                filter(comment__pk__in=filtered_comment_keys).values_list('comment__pk', flat=True)
+            filtered_c_comment_keys = post.child_comments.all().values_list('pk', flat=True)
+            context['child_comments_liked'] = self.request.user.childcommentlikes_set.\
+                filter(child_comment__pk__in=filtered_c_comment_keys).values_list('child_comment__pk', flat=True)
         if self.request.GET.get('cpk'):
             context['cpk'] = int(self.request.GET.get('cpk'))
         if self.request.GET.get('ccpk'):
