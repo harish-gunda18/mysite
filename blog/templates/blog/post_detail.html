@@ -26,6 +26,9 @@
             {% endif %}
           </div>
           <div style="display: inline-block;">
+            <p id="load" style="display:none;">loading...</p>
+          </div>
+          <div style="display: inline-block;">
             {% if object.postlikes_set.all.exists %}
               <p id="post_like_{{ object.id }}">{{ object.postlikes_set.all|length }}</p>
             {% else %}
