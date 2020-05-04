@@ -12,6 +12,18 @@ function show_form(id1,id2) {
 
 function update_like(id, like, pk, url) {
     var json_http = new XMLHttpRequest();
+    json_http.onloadstart = function() {
+        var x = document.getElementById("load");
+            if (x.style.display === "none") {
+            x.style.display = "block";
+            }
+    }
+    json_http.onload = function() {
+        var x = document.getElementById("load");
+            if (x.style.display === "block") {
+            x.style.display = "none";
+            }
+    }
     json_http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             try {
