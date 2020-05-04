@@ -263,6 +263,5 @@ def delete_notification(request, pk):
         notification = get_object_or_404(Notification, pk=pk)
         if notification.author == request.user:
             notification.delete()
-            print(len(request.user.notification_set.all()))
             return JsonResponse(data={'success': 'success', 'count': len(request.user.notification_set.all())})
     return JsonResponse(data={'error': 'Permission denied'})
