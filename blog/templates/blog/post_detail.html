@@ -15,6 +15,11 @@
         {% endif %}
       </div>
       <h2 class="article-title">{{ object.title }}</h2>
+      {% if object.image %}
+        <div class="mb-3">
+          <img src="{{ object.image_thumbnail.url }}" class="img-thumbnail">
+        </div>
+      {% endif %}
       <p class="article-content">{{ object.content }}</p>
       {% if user.is_authenticated %}
         <div class="mb-2">
