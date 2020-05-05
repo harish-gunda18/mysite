@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import Transpose, SmartResize
 
 
 # Create your models here.
@@ -11,6 +13,13 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='post_pics', null=True, blank=True)
+    image_thumbnail = ImageSpecField(
+        source='image',
+        processors=[Transpose(), SmartResize(600, 400)],
+        format='JPEG',
+        options={'quality': 75}
+    )
 
     def __str__(self):
         return self.title
