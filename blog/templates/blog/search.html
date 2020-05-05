@@ -10,6 +10,11 @@
               <small class="text-muted">{{ post.date_posted }}</small>
             </div>
             <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h2>
+            {% if post.image %}
+              <div class="mb-3">
+                <img src="{{ post.image_thumbnail.url }}" class="img-thumbnail">
+              </div>
+            {% endif %}
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
