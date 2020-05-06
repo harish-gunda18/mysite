@@ -3,7 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from imagekit.models import ImageSpecField
-from imagekit.processors import Transpose, SmartResize
+from imagekit.processors import Transpose
+from PIL import Image
 
 
 # Create your models here.
@@ -16,10 +17,20 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_pics', null=True, blank=True)
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[Transpose(), SmartResize(600, 400)],
+        processors=[Transpose()],
         format='JPEG',
         options={'quality': 75}
     )
+
+    def save(self, *args, **kwargs):
+        super().save()
+        img = Image.open(self.image.path)
+
+        # if img.height > 600 or img.width > 400:
+        output_size = (600, 400)
+        img = img.resize(output_size)
+
+        img.save(self.image.path)
 
     def __str__(self):
         return self.title
