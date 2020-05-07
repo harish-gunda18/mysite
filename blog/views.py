@@ -270,3 +270,31 @@ def delete_notification(request, pk):
             notification.delete()
             return JsonResponse(data={'success': 'success', 'count': len(request.user.notification_set.all())})
     return JsonResponse(data={'error': 'Permission denied'})
+
+
+def who_liked_post(request, pk):
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+        if post.postlikes_set.all().exists():
+            liked_usernames = '|||'.join(post.postlikes_set.all().values_list('author__username', flat=True))
+            return JsonResponse(data={'success': 'success', 'liked_usernames': liked_usernames})
+    return JsonResponse(data={'error': 'Permission denied'})
+
+
+def who_liked_comment(request, pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=pk)
+        if comment.commentlikes_set.all().exists():
+            liked_usernames = '|||'.join(comment.commentlikes_set.all().values_list('author__username', flat=True))
+            return JsonResponse(data={'success': 'success', 'liked_usernames': liked_usernames})
+    return JsonResponse(data={'error': 'Permission denied'})
+
+
+def who_liked_child_comment(request, pk):
+    if request.user.is_authenticated:
+        child_comment = get_object_or_404(ChildComment, pk=pk)
+        if child_comment.childcommentlikes_set.all().exists():
+            liked_usernames = '|||'.join(child_comment.childcommentlikes_set.all().values_list('author__username', flat=True))
+            print(liked_usernames)
+            return JsonResponse(data={'success': 'success', 'liked_usernames': liked_usernames})
+    return JsonResponse(data={'error': 'Permission denied'})
