@@ -1,6 +1,12 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content" id="like_modal">
+      </div>
+    </div>
+  </div>
   <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
     <div class="media-body">
@@ -35,9 +41,9 @@
           </div>
           <div style="display: inline-block;">
             {% if object.postlikes_set.all.exists %}
-              <p id="post_like_{{ object.id }}">{{ object.postlikes_set.all|length }}</p>
+              <button class="button-link" id="post_like_{{ object.id }}" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'post', '{% url 'who-liked-post' object.pk %}')">{{ object.postlikes_set.all|length }}</button>
             {% else %}
-              <p id="post_like_{{ object.id }}"></p>
+              <button class="button-link" id="post_like_{{ object.id }}" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'post', '{% url 'who-liked-post' object.pk %}')"></button>
             {% endif %}
           </div>
         </div>
@@ -120,9 +126,9 @@
             </div>
             <div style="display: inline-block;">
               {% if comment.commentlikes_set.all.exists %}
-                <p id="like_{{ comment.id }}">{{ comment.commentlikes_set.all|length }}</p>
+                <button id="like_{{ comment.id }}" class="button-link" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'comment', '{% url 'who-liked-comment' comment.pk %}')">{{ comment.commentlikes_set.all|length }}</button>
               {% else %}
-                <p id="like_{{ comment.id }}"></p>
+                <button id="like_{{ comment.id }}" class="button-link" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'comment', '{% url 'who-liked-comment' comment.pk %}')"></button>
               {% endif %}
             </div>
           </div>
@@ -208,9 +214,9 @@
                   </div>
                   <div style="display: inline-block;">
                     {% if child_comment.childcommentlikes_set.all.exists %}
-                      <p id="like_child_{{ child_comment.id }}">{{ child_comment.childcommentlikes_set.all|length }}</p>
+                      <button id="like_child_{{ child_comment.id }}" class="button-link" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'child_comment', '{% url 'who-liked-child-comment' child_comment.pk %}')">{{ child_comment.childcommentlikes_set.all|length }}</button>
                     {% else %}
-                      <p id="like_child_{{ child_comment.id }}"></p>
+                      <button id="like_child_{{ child_comment.id }}" class="button-link" data-toggle="modal" data-target="#myModal" onclick="show_who_liked('like_modal', 'child_comment', '{% url 'who-liked-child-comment' child_comment.pk %}')"></button>
                     {% endif %}
                   </div>
                 </div>
