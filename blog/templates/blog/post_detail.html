@@ -73,7 +73,7 @@
   <! –– logic to display comments ––>
 
   {% for comment in object.comments.all|dictsortreversed:"date_posted" %}
-    <div class="media border p-3 mb-3">
+    <div class="media border p-3 mb-3" style="background: #ffffff;">
       <img src="{{ comment.author.profile.image.url }}" class="mr-3 mt-3 rounded-circle" style="width:60px;height:60px;">
       <div class="media-body">
         <div class="row">
