@@ -59,13 +59,13 @@ function update_like(id, like, pk, url) {
 
 function show_who_liked(id, model, url) {
     var json_http = new XMLHttpRequest();
+    var mod = document.getElementById(id);
+    mod.textContent = '';
     json_http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             try {
                 var myObj = JSON.parse(this.responseText);
                 liked_usernames = myObj.liked_usernames;
-                var mod = document.getElementById(id);
-                mod.textContent = '';
                 var mod_head = document.createElement("div");
                 mod_head.className = 'modal-header';
                 mod_head.innerHTML = "<h4 class='modal-title'>People who liked this</h4><button type='button' class='close' data-dismiss='modal'>&times;</button>";
