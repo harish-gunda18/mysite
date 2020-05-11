@@ -9,5 +9,5 @@ To create a profile click on register on home page. If you have already created 
 clicking on login. You can create a new post by clicking on new post once you are logged in. You can update or delete 
 your posts only. You can logout of the blog by clicking on logout.
 
-You can like posts and comment. Also like comments and reply to comments. You wiil be notified of any comments on your 
-posts or replies to your comments
+You can like posts and comment. Also like comments and reply to comments. You will be notified of any comments on your 
+posts or if some one replies to your comments
