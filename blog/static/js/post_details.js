@@ -1,3 +1,42 @@
+function read_more(){
+    var contents = document.getElementsByClassName("article-content");
+    for (var i = 0; i < contents.length; i++) {
+        content_text = contents.item(i).innerHTML;
+        if (content_text.length >= 1000) {
+            try {
+                contents.item(i).textContent = '';
+                var visible_text = content_text.slice(0, 1000);
+                var hidden_text = content_text.slice(1001, content_text.length-1);
+                var visible_span = document.createElement("span");
+                visible_span.innerHTML = visible_text;
+                var hidden_span = document.createElement("span");
+                hidden_span.innerHTML = hidden_text;
+                hidden_span.style.display = "none";
+                hidden_span.id = "hidden_" + i.toString()
+                var read_more_button = document.createElement("button");
+                read_more_button.className = "button-link";
+                read_more_button.innerHTML = "read more"
+                read_more_button.onclick = function(){
+                    if (hidden_span.style.display == "none") {
+                        hidden_span.style.display = "block"
+                        read_more_button.innerHTML = "read less"
+                    } else {
+                        hidden_span.style.display = "none"
+                        read_more_button.innerHTML = "read more"
+                    }
+                }
+                contents.item(i).appendChild(visible_span);
+                contents.item(i).appendChild(hidden_span);
+                contents.item(i).appendChild(read_more_button);
+            }catch (err) {
+                alert('error')
+                alert(err.message);
+            }
+        }
+    }
+}
+
+
 function show_form(id1,id2) {
   var x = document.getElementById(id1);
   if (x.style.display === "none") {
