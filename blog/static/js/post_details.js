@@ -18,7 +18,7 @@ function read_more(){
                 read_more_button.innerHTML = "read more"
                 read_more_button.onclick = function(){
                     if (hidden_span.style.display == "none") {
-                        hidden_span.style.display = "block"
+                        hidden_span.style.display = "inline-block"
                         read_more_button.innerHTML = "read less"
                     } else {
                         hidden_span.style.display = "none"
