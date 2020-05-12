@@ -15,14 +15,14 @@ function read_more(){
                 hidden_span.id = "hidden_" + i.toString()
                 var read_more_button = document.createElement("button");
                 read_more_button.className = "button-link";
-                read_more_button.innerHTML = "read more"
+                read_more_button.innerHTML = "... read more"
                 read_more_button.onclick = function(){
                     if (hidden_span.style.display == "none") {
                         hidden_span.style.display = "inline"
                         read_more_button.innerHTML = "read less"
                     } else {
                         hidden_span.style.display = "none"
-                        read_more_button.innerHTML = "read more"
+                        read_more_button.innerHTML = "... read more"
                     }
                 }
                 contents.item(i).appendChild(visible_span);
