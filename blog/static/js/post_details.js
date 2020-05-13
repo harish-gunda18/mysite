@@ -5,8 +5,8 @@ function read_more(){
         if (content_text.length >= 1000) {
             try {
                 contents.item(i).textContent = '';
-                var visible_text = content_text.slice(0, 1000);
-                var hidden_text = content_text.slice(1000, content_text.length-1);
+                var visible_text = content_text.slice(0, 700);
+                var hidden_text = content_text.slice(700, content_text.length-1);
                 var visible_span = document.createElement("span");
                 visible_span.innerHTML = visible_text;
                 var hidden_span = document.createElement("span");
