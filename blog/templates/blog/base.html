@@ -65,7 +65,7 @@
                             </li>
                             <li class="nav-item"><a class="nav-item nav-link" href="{% url 'logout' %}">LogOut <span class="fa fa-power-off"></span></a></li>
                         {% else %}
-                            <a class="nav-item nav-link" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                            <a class="nav-item nav-link" href="{% url 'login' %}?next={{ request.path }}">Login <span class="fa fa-power-off"></a>
                             <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                         {% endif %}
                     </ul>
