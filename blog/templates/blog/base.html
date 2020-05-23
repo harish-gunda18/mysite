@@ -52,13 +52,13 @@
                                     {% for notification in user.notification_set.all|dictsortreversed:"date_posted" %}
                                         <div class="dropdown-item bg-dark" id="notification_{{ notification.id }}">
                                             {% if notification.liked_post %}
-                                                <a style="display: inline-block;" class="text-left" href="{% url 'post-detail' pk=notification.post.id %}">{{ notification.notification_text }} </a>
+                                                <a class="mr-auto" href="{% url 'post-detail' pk=notification.post.id %}">{{ notification.notification_text }} </a>
                                             {% elif notification.comment %}
-                                                <a style="display: inline-block;" class="text-left" href="{% url 'post-detail' pk=notification.post.id %}?cpk={{notification.comment.pk}}">{{ notification.notification_text }} </a>
+                                                <a class="mr-auto" href="{% url 'post-detail' pk=notification.post.id %}?cpk={{notification.comment.pk}}">{{ notification.notification_text }} </a>
                                             {% else %}
-                                                <a style="display: inline-block;" class="text-left" href="{% url 'post-detail' pk=notification.post.id %}?ccpk={{notification.child_comment.pk}}">{{ notification.notification_text }} </a>
+                                                <a class="mr-auto" href="{% url 'post-detail' pk=notification.post.id %}?ccpk={{notification.child_comment.pk}}">{{ notification.notification_text }} </a>
                                             {% endif %}
-                                            <button class="btn-success text-right" style="display: inline-block;" onclick="delete_notification('notification_{{ notification.id }}', '{% url 'notification-delete' pk=notification.id %}')">Mark as read</button>
+                                            <button class="btn-success ml-auto" onclick="delete_notification('notification_{{ notification.id }}', '{% url 'notification-delete' pk=notification.id %}')">Mark as read</button>
                                         </div>
                                     {% endfor %}
                                 </div>
