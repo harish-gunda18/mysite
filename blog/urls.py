@@ -3,7 +3,7 @@ from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView,
     PostSearchListView, LatestPosts, who_liked_post
 from . import views
 from blog.api.views import api_detail_post_view, api_update_post_view, api_delete_post_view, api_create_post_view,\
-    ApiPostListView
+    ApiPostListView, ApiNotificationListView
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -30,8 +30,9 @@ urlpatterns = [
     path('wholikedchildcomment/<int:pk>/', views.who_liked_child_comment, name='who-liked-child-comment'),
     # api views
     path('<int:pk>/details/', api_detail_post_view, name='api-post-detail'),
-    path('<title>/update/', api_update_post_view, name='api-post-update'),
-    path('<title>/delete/', api_delete_post_view, name='api-post-delete'),
+    path('<int:pk>/update/', api_update_post_view, name='api-post-update'),
+    path('<int:pk>/delete/', api_delete_post_view, name='api-post-delete'),
     path('create/', api_create_post_view, name='api-post-create'),
     path('list/', ApiPostListView.as_view(), name='api-post-list'),
+    path('notifications/', ApiNotificationListView.as_view(), name='api-notification-list'),
 ]
