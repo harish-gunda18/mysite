@@ -38,7 +38,7 @@
                         <form method="get" action="{% url 'blog-search' %}">
                             {% csrf_token %}
                             <input class="align-middle" name="search" value="" placeholder="search here" required>
-                            <button class="btn btn-primary">Search <span class="fa fa-search"></span></button>
+                            <button class="btn btn-primary"><span class="fa fa-search"> Search</span></button>
                         </form>
                         {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-item nav-link" href="{% url 'user-posts' username=user.username %}">My Posts</a></li>
