@@ -6,51 +6,49 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.filters import SearchFilter, OrderingFilter
-
-# from django.contrib.auth.models import User
 from blog.models import Post
-from blog.api.serializers import BlogPostSerializer
+from blog.api.serializers import BlogPostSerializer, NotificationSerializer
 
 
-@api_view(['GET'])
-@permission_classes((IsAuthenticated,))
+# view to get post details like title,content,date_posted,author,image,is_liked
+@api_view(['GET'])  # ensure only get method
+@permission_classes((IsAuthenticated,))  # only authenticated can get these details
 def api_detail_post_view(request, pk):
     try:
         blog_post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = BlogPostSerializer(blog_post)
+    serializer = BlogPostSerializer(blog_post, context={'user': request.user})
     return Response(serializer.data)
 
 
-@api_view(['PUT'])
-@permission_classes((IsAuthenticated,))
-def api_update_post_view(request, title):
+# view to update post details like title,content
+@api_view(['PUT'])  # ensure only put method
+@permission_classes((IsAuthenticated,))  # only authenticated can get these details
+def api_update_post_view(request, pk):
     try:
-        title = title.replace(r'%20', ' ')
-        blog_post = Post.objects.get(title=title)
+        blog_post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if blog_post.author != request.user:
         return Response({"response": "You don't have permission to edit that"})
 
-    if request.method == 'PUT':
-        serializer = BlogPostSerializer(blog_post, data=request.data)
-        data = {}
-        if serializer.is_valid():
-            serializer.save()
-            data["success"] = 'update successful'
-            return Response(data=data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer = BlogPostSerializer(blog_post, data=request.data)
+    data = {}
+    if serializer.is_valid():
+        serializer.save()
+        data["success"] = 'update successful'
+        return Response(data=data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['DELETE'])
-@permission_classes((IsAuthenticated,))
-def api_delete_post_view(request, title):
+# view to delete post
+@api_view(['DELETE'])  # ensure only delete method
+@permission_classes((IsAuthenticated,))  # only authenticated can delete post
+def api_delete_post_view(request, pk):
     try:
-        title = title.replace(r'%20', ' ')
-        blog_post = Post.objects.get(title=title)
+        blog_post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if blog_post.author != request.user:
@@ -66,8 +64,9 @@ def api_delete_post_view(request, title):
         return Response(data=data)
 
 
-@api_view(['POST'])
-@permission_classes((IsAuthenticated,))
+# view to create post
+@api_view(['POST'])  # ensure only post method
+@permission_classes((IsAuthenticated,))  # only authenticated can create new post
 def api_create_post_view(request):
     user = request.user
     blog_post = Post(author=user)
@@ -79,6 +78,7 @@ def api_create_post_view(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# view to search post details like title,content which is class based api view
 class ApiPostListView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = BlogPostSerializer
@@ -87,3 +87,15 @@ class ApiPostListView(ListAPIView):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('title', 'content')
+
+
+class ApiNotificationListView(ListAPIView):
+    serializer_class = NotificationSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('title', 'content')
+
+    def get_queryset(self):
+        return self.request.user.notification_set.all().order_by('-date_posted')
