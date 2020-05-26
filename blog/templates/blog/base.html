@@ -38,12 +38,12 @@
                         <form method="get" action="{% url 'blog-search' %}">
                             {% csrf_token %}
                             <input class="align-middle" name="search" value="" placeholder="search here" required>
-                            <button class="btn btn-primary"><span class="fa fa-search"> Search</span></button>
+                            <button class="btn btn-primary"><span class="fa fa-search"></span></button>
                         </form>
                         {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-item nav-link" href="{% url 'user-posts' username=user.username %}">My Posts</a></li>
-                            <li class="nav-item"><a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a></li>
-                            <li class="nav-item"><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a></li>
+                            <li class="nav-item"><a class="nav-item nav-link" href="{% url 'post-create' %}"><span class="fa fa-pencil"></span> New Post</a></li>
+                            <li class="nav-item"><a class="nav-item nav-link" href="{% url 'profile' %}"><span class="fa fa-id-badge"></span> Profile</a></li>
                             <li class="nav-item dropdown">
                                 <a id="notification" class="nav-link dropdown-toggle" data-toggle="dropdown">
                                   Notifications <span class="fa fa-bell"></span><sup id="notification_count">{{ user.notification_set.all|length }}</sup>
