@@ -5,7 +5,7 @@ chardet==3.0.4
 cycler==0.10.0
 Django==2.2.5
 django-crispy-forms==1.7.2
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 et-xmlfile==1.0.1
 future==0.18.0
 google-api-core==1.15.0
