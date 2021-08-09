@@ -32,7 +32,7 @@ pyparsing==2.4.6
 pytesseract==0.3.1
 python-dateutil==2.8.1
 pytz==2019.2
-pywin32==225
+pywin32==301
 pywin32-ctypes==0.2.0
 requests==2.22.0
 rsa==4.0
